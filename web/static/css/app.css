@@ -1,6 +1,7 @@
 /* This file is for your main application css. */
 #map {
-  border: 2px solid #ddd;
+  border: 1px solid #ddd;
+  margin-top: 15px
 }
 
 .svg-container {

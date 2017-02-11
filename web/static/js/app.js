@@ -13,6 +13,7 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html";
 import ReactDOM from "react-dom";
+import Summary from "./react/summary";
 import React from "react";
 
 // Import local files
@@ -22,5 +23,19 @@ import React from "react";
 
 // import socket from "./socket"
 import Underground from "./underground"
+import SummaryStore from "./summary_store"
 
-Underground.init("#map");
+const obsSummaryStore = new SummaryStore();
+
+Underground.init("#map", "api/underground_stations/1", obsSummaryStore);
+
+
+ReactDOM.render(
+  <Summary store = {obsSummaryStore}/>,
+  document.getElementById('summary')
+);
+
+$("input").click(function(d) {
+  const no_bedrooms = $(this).val();
+  Underground.update("#map", `api/underground_stations/${no_bedrooms}`);
+});

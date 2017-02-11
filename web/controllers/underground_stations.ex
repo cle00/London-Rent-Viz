@@ -2,14 +2,14 @@ defmodule LdnRent.UndergroundStationsController do
   use LdnRent.Web, :controller
   import Ecto.Query
 
-  def index(conn, _params) do
+  def index(conn, %{"bedroom_number" => bedroom_number}) do
     sub_query = from sq in LdnRent.Nestoria,
       distinct: sq.lister_url,
       select: [:place_name,
               :price,
               :price_type],
       where: fragment("cast(to_char(?, 'YYYYMMDD') AS INTEGER) >= (SELECT cast(to_char(max(inserted_at), 'YYYYMMDD') AS INTEGER) - 1 FROM nestoria)", sq.inserted_at),
-      where: sq.bedroom_number == 1
+      where: sq.bedroom_number == ^bedroom_number
 
     query = from un in LdnRent.Underground,
       left_join: ne in subquery(sub_query), on: un.station_name_slug == ne.place_name,

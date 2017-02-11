@@ -17,7 +17,7 @@ defmodule LdnRent.Router do
     pipe_through :api
 
     resources "/underground_routes", UndergroundRoutesController, only: [:index]
-    resources "/underground_stations", UndergroundStationsController, only: [:index]
+    resources "/underground_stations/:bedroom_number", UndergroundStationsController, only: [:index]
   end
 
   scope "/", LdnRent do
