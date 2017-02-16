@@ -7,14 +7,14 @@ class Summary extends React.Component {
     const store = this.props.store
     if (store.selected == true) {
       return (
-        <div>
-          <div className="col-lg-4">
+        <div className="col-sm-12">
+          <div className="col-sm-4">
             <h4 id="stop"> Stop: {store.stop}</h4>
           </div>
-          <div className="col-lg-4">
+          <div className="col-sm-4">
             <h4 id="avg_px"> Avg PX: {store.avg_px}</h4>
           </div>
-          <div className="col-lg-4">
+          <div className="col-sm-4">
             <h4 id="count"> Count: {store.count}</h4>
           </div>
         </div>

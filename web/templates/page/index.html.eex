@@ -15,3 +15,7 @@
       </div>
   </div>
 </div>
+<div class="row">
+  <div id="summary_table" class="col-lg-12">
+  </div>
+</div>

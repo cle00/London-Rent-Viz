@@ -6,7 +6,10 @@ defmodule LdnRent.UndergroundStationsController do
     sub_query = from sq in LdnRent.Nestoria,
       distinct: sq.lister_url,
       select: [:place_name,
+              :lister_url,
               :price,
+              :datasource_name,
+              :title,
               :price_type],
       where: fragment("cast(to_char(?, 'YYYYMMDD') AS INTEGER) >= (SELECT cast(to_char(max(inserted_at), 'YYYYMMDD') AS INTEGER) - 1 FROM nestoria)", sq.inserted_at),
       where: sq.bedroom_number == ^bedroom_number
@@ -36,6 +39,7 @@ defmodule LdnRent.UndergroundStationsController do
       order_by: [ne.place_name]
 
     underground_stations = Repo.all(query)
-    render conn, "index.json", underground_stations: underground_stations
+    nestoria_results = Repo.all(sub_query)
+    render conn, "index.json", underground_stations: underground_stations, nestoria_results: nestoria_results
   end
 end

@@ -65,6 +65,15 @@ exports.config = {
     }
   },
 
+  module: {
+    loaders: [
+        {
+            test: /datatables\.net.*/,
+            loader: 'imports?define=>false'
+        }
+    ]
+  },
+
   npm: {
     enabled: true,
     whitelist: ["phoenix", "phoenix_html", "react", "react-dom"]

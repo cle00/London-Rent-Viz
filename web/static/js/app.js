@@ -24,18 +24,54 @@ import React from "react";
 // import socket from "./socket"
 import Underground from "./underground"
 import SummaryStore from "./summary_store"
+import SummaryTable from "./react/summary_table"
+
+import 'datatables.net';
+import dt from 'datatables.net-bs';
+dt(window, $);
 
 const obsSummaryStore = new SummaryStore();
 
-Underground.init("#map", "api/underground_stations/1", obsSummaryStore);
+const getJSON = function(url, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("get", url, true);
+  xhr.responseType = "json";
+  xhr.onload = function() {
+    var status = xhr.status;
+    if (status == 200) {
+      callback(null, xhr.response);
+    } else {
+      callback(status);
+    }
+  };
+  xhr.send();
+};
 
+getJSON("/api/nestoria_results/1",
+  function(err, results) {
+    if (err != null) {
+      return "Error: " + err
+    } else {
+      obsSummaryStore.results = results
+    }
+  }
+);
+
+Underground.init("#map", "api/underground_stations/1", obsSummaryStore);
 
 ReactDOM.render(
   <Summary store = {obsSummaryStore}/>,
   document.getElementById('summary')
 );
 
+ReactDOM.render(
+  <SummaryTable store = {obsSummaryStore}/>,
+  document.getElementById('summary_table')
+);
+
 $("input").click(function(d) {
-  const no_bedrooms = $(this).val();
+  const no_bedrooms = $(this).val() || 1;
   Underground.update("#map", `api/underground_stations/${no_bedrooms}`);
 });
+
+$('.JsonTable').DataTable();

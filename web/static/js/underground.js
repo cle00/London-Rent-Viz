@@ -170,7 +170,7 @@ let Underground = {
                 store.count = i;
                 store.avg_px = Math.round(d.avg_monthly_price) + "pcm";
                 store.stop = d.station_name;
-                console.log(d);
+                store.place_name_slug = d.place_name;
                 // div.transition()
                 //   .duration(200)
                 //   .style("opacity", .9);

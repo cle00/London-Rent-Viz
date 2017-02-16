@@ -16,6 +16,7 @@ defmodule LdnRent.Router do
   scope "/api", LdnRent do
     pipe_through :api
 
+    resources "/nestoria_results/:bedroom_number", NestoriaResultsController, only: [:index]
     resources "/underground_routes", UndergroundRoutesController, only: [:index]
     resources "/underground_stations/:bedroom_number", UndergroundStationsController, only: [:index]
   end
