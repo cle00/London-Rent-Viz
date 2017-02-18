@@ -26,10 +26,6 @@ import Underground from "./underground"
 import SummaryStore from "./summary_store"
 import SummaryTable from "./react/summary_table"
 
-import 'datatables.net';
-import dt from 'datatables.net-bs';
-dt(window, $);
-
 const obsSummaryStore = new SummaryStore();
 
 const getJSON = function(url, callback) {
@@ -73,5 +69,3 @@ $("input").click(function(d) {
   const no_bedrooms = $(this).val() || 1;
   Underground.update("#map", `api/underground_stations/${no_bedrooms}`);
 });
-
-$('.JsonTable').DataTable();
