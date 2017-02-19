@@ -14,7 +14,7 @@ defmodule LdnRent do
       supervisor(LdnRent.Endpoint, []),
       # Start your own worker by calling: LdnRent.Worker.start_link(arg1, arg2, arg3)
       # worker(LdnRent.Worker, [arg1, arg2, arg3]),
-      worker(LdnRent.Scheduler, [])
+      # worker(LdnRent.Scheduler, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

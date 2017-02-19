@@ -19,7 +19,7 @@ defmodule LdnRent.Mixfile do
   def application do
     [mod: {LdnRent, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,6 +39,7 @@ defmodule LdnRent.Mixfile do
      {:gettext, "~> 0.11"},
      {:httpoison, "~> 0.10.0"},
      {:csv, "~> 1.2.3"},
+     {:poison, "~> 2.0"},
      {:cowboy, "~> 1.0"}]
   end
 
