@@ -9,13 +9,13 @@ class Summary extends React.Component {
       return (
         <div className="col-sm-12">
           <div className="col-sm-4">
-            <h4 id="stop"> Stop: {store.stop}</h4>
+            <h4 id="stop">Underground Stop: {store.stop}</h4>
           </div>
           <div className="col-sm-4">
-            <h4 id="avg_px"> Avg PX: {store.avg_px}</h4>
+            <h4 id="avg_px"> Average Price (GBP): {store.avg_px}</h4>
           </div>
           <div className="col-sm-4">
-            <h4 id="count"> Count: {store.count}</h4>
+            <h4 id="count"> No. of apts: {store.count}</h4>
           </div>
         </div>
       )

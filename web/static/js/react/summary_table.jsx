@@ -4,7 +4,7 @@ import {observer} from "mobx-react";
 
 function TableRowFactory(props) {
   if (props.rows.length > 0) {
-    const headerList = props.keys.map((row, index) =>
+    const headerList = props.header.map((row, index) =>
       <th key={index}>{row}</th>
     );
 
@@ -45,7 +45,10 @@ class SummaryTable extends React.Component {
     const store = this.props.store;
     if (store.selected == true) {
       return (
-        <TableRowFactory rows={store.filter_results} keys={['title', 'price', 'lister_url']}/>
+        <TableRowFactory rows={store.filter_results}
+          keys={['title', 'avg_monthly_price', 'datasource_name']}
+          header={['Description', 'Avg Monthly Price (GBP)', 'Source']}
+        />
       )
     } else {
       return (<div></div>)

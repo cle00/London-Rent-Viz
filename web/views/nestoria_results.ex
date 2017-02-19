@@ -7,13 +7,23 @@ defmodule LdnRent.NestoriaResultsView do
   end
 
   def nestoria_results_json(flats) do
+    [
+      place_name,
+      lister_url,
+      price,
+      datasource_name,
+      title,
+      avg_monthly_price,
+      price_type
+    ] = flats
     %{
-      place_name: flats.place_name,
-      lister_url: flats.lister_url,
-      price: flats.price,
-      datasource_name: flats.datasource_name,
-      title: flats.title,
-      price_type: flats.price_type
+      place_name: place_name,
+      lister_url: lister_url,
+      price: price,
+      avg_monthly_price: avg_monthly_price,
+      datasource_name: datasource_name,
+      title: title,
+      price_type: price_type
     }
   end
 end
