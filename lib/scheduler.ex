@@ -17,6 +17,6 @@ defmodule LdnRent.Scheduler do
   end
 
   defp schedule_work() do
-    Process.send_after(self(), :work, 3 * 24 * 60 * 60 * 1000) # In 3 days
+    Process.send_after(self(), :work, 7 * 24 * 60 * 60 * 1000) # In 3 days
   end
 end
