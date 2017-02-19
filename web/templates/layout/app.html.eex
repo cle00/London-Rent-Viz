@@ -20,6 +20,7 @@
 
       ga('create', 'UA-92233448-1', 'auto');
       ga('send', 'pageview');
+      console.log("GA executed")
     </script>
     <!-- End Google Analytics -->
   </head>

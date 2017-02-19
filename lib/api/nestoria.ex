@@ -10,6 +10,7 @@ defmodule LdnRent.Api.Nestoria do
     for place_name <- place_name_list do
       process(page, place_name)
     end
+    {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "PROCESS COMPLETE"})
   end
 
   def process(page, place_name) do
@@ -23,7 +24,7 @@ defmodule LdnRent.Api.Nestoria do
         process(page, place_name)
       {:ok, %{response: res, last_page: true}} ->
         add_to_database(res["listings"], place_name)
-        {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "Process complete"})
+        {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "Place name added"})
       {:error, %{last_page: true}} ->
         {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "Bad request or empty listings"})
     end
