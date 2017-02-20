@@ -11,11 +11,13 @@ defmodule LdnRent.Api.Nestoria do
       process(page, place_name)
     end
     {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "PROCESS COMPLETE"})
+    IO.puts "Bad request or empty listings"
   end
 
   def process(page, place_name) do
     url = "http://api.nestoria.co.uk/api?encoding=json&pretty=1&action=search_listings&country=uk&listing_type=rent&place_name=#{place_name}&number_of_results=50&page=#{page}"
-    {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: url})
+    {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: Enum.join([place_name, url], " // ")})
+    IO.puts Enum.join([place_name, url], " // ")
     Process.sleep(10000)
     case fetch(url) do
       {:ok, %{response: res, last_page: false, page: curr_page}} ->
@@ -25,8 +27,10 @@ defmodule LdnRent.Api.Nestoria do
       {:ok, %{response: res, last_page: true}} ->
         add_to_database(res["listings"], place_name)
         {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "Place name added"})
+        IO.puts "Place name added"
       {:error, %{last_page: true}} ->
         {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "Bad request or empty listings"})
+        IO.puts "Bad request or empty listings"
     end
   end
 
@@ -56,8 +60,10 @@ defmodule LdnRent.Api.Nestoria do
         end
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "request not found"})
+        IO.puts "request not found"
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "error, waiting 10 seconds..."})
+        IO.puts "Error, waiting 10 seconds..."
         IO.inspect reason
         Process.sleep(10000)
         fetch(url)
@@ -69,10 +75,14 @@ defmodule LdnRent.Api.Nestoria do
     changeset = Nestoria.changeset(%Nestoria{}, head)
     Repo.insert!(changeset)
     add_to_database(tail, place_name)
+
+    {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "URL added"})
+    IO.puts "URL added..."
   end
 
   def add_to_database([], place_name) do
-    {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "url added"})
+    {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "URL finished"})
+    IO.puts "URL finished..."
   end
 end
 
