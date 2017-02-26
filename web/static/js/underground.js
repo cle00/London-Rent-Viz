@@ -166,11 +166,13 @@ let Underground = {
               .style("fill", '#ffffff')
               .style("opacity", 0.3)
               .on('mouseover', function(d,i) {
+
                 store.selected = true;
                 store.count = d.data_count;
                 store.avg_px = Math.round(d.avg_monthly_price) + "pcm";
                 store.stop = d.station_name;
                 store.place_name_slug = d.place_name;
+                store.handleChannelConnect()
                 // div.transition()
                 //   .duration(200)
                 //   .style("opacity", .9);

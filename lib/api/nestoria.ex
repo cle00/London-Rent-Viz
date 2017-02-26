@@ -75,9 +75,6 @@ defmodule LdnRent.Api.Nestoria do
     changeset = Nestoria.changeset(%Nestoria{}, head)
     Repo.insert!(changeset)
     add_to_database(tail, place_name)
-
-    {:ok, inserted_post} = LdnRent.Repo.insert(%LdnRent.NestoriaLogs{log: "URL added"})
-    IO.puts "URL added..."
   end
 
   def add_to_database([], place_name) do

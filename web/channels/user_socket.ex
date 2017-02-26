@@ -2,7 +2,7 @@ defmodule LdnRent.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", LdnRent.RoomChannel
+  channel "underground_stop:*", LdnRent.UndergroundStopChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,

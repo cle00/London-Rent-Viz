@@ -13,20 +13,22 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html";
 import ReactDOM from "react-dom";
-import Summary from "./react/summary";
 import React from "react";
+import socket from "./socket";
 
 // Import local files
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-// import socket from "./socket"
 import Underground from "./underground"
-import SummaryStore from "./summary_store"
-import SummaryTable from "./react/summary_table"
 
-const obsSummaryStore = new SummaryStore();
+import SummaryStore from "./summary_store"
+import Summary from "./react/summary";
+import SummaryTable from "./react/summary_table"
+import Timeseries from "./react/timeseries"
+
+const obsSummaryStore = new SummaryStore({socket: socket});
 
 const getJSON = function(url, callback) {
   const xhr = new XMLHttpRequest();
@@ -54,6 +56,11 @@ getJSON("/api/nestoria_results/1",
 );
 
 Underground.init("#map", "api/underground_stations/1", obsSummaryStore);
+
+ReactDOM.render(
+  <Timeseries store = {obsSummaryStore}/>,
+  document.getElementById('timeseries')
+);
 
 ReactDOM.render(
   <Summary store = {obsSummaryStore}/>,
